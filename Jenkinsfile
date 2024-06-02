@@ -16,7 +16,6 @@ pipeline {
                 echo 'test'
             }
         }
-        }
         stage('Build') {
             steps {
                 sh 'npm run build'
