@@ -16,7 +16,7 @@ pipeline {
             steps {
                 sh 'nohup npm start &'
                 sleep 10
-                sh 'curl -k localhost:3000'
+                sh 'curl -k localhost:8000'
             }
         }
         stage('build app') {
