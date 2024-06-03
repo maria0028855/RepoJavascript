@@ -1,32 +1,70 @@
 pipeline {
     agent any
-
+    environment {
+        CI = 'true'
+        registry = "maria0028855/appimg"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
     stages {
-        stage('Install packages') {
+        stage('install packages') {
             steps {
                 sh 'npm install'
-                echo 'install packages'
             }
         }
-        stage('Test') {
+        stage('test') {
             steps {
-                sh 'npm start'
-                sh 'sleep 10'
+                sh 'nohup npm start &'
+                sleep 10
                 sh 'curl -k localhost:3000'
-                echo 'test'
             }
         }
-        stage('Build') {
+        stage('build app') {
             steps {
                 sh 'npm run build'
-                echo 'building'
+                sh 'tar -czvf build.tar.gz build/*'
+                archiveArtifacts artifacts: 'build.tar.gz', followSymlinks: false
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+        // stage('publish docker img')
+        stage('build docker image'){
+            steps{
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('scan image'){
+            steps{
+                sh "bash scanimg.sh"
+            }
+        }
+        stage('publish docker image'){
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
+                    }
+                }
+            }
+        }
+        stage('cleanup containers'){
+            steps{
+                sh '''
+                    if docker container ls -a | grep app ;
+                    then 
+                        docker container stop app
+                        docker container rm app
+                    fi
+                '''
+                }
+            }
+        stage('deploy image'){
+            steps{
+                sh 'docker run -d -p 4000:80 --name app appimg'
+                sleep 10
+                sh 'curl -k localhost:4000'
             }
         }
     }
 }
-

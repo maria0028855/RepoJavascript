@@ -1,0 +1,6 @@
+
+> js-e2e-express-server@1.0.0 start
+> node src/index.js
+
+Server has started on port 3000!
+::ffff:127.0.0.1 - GET / 200
