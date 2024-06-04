@@ -22,7 +22,7 @@ pipeline {
         stage('build app') {
             steps {
                 sh 'npm run build'
-                sh 'tar -czf build.tar.gz ./source ./public package.json'
+                sh 'tar -czf build.tar.gz ./src ./public package.json'
                 archiveArtifacts artifacts: 'build.tar.gz', followSymlinks: false
             }
         }
