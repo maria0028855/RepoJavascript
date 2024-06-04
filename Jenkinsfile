@@ -51,6 +51,14 @@ pipeline {
                 }
             }
         }
+        
+        stage('deploy image'){
+            steps{
+                sh 'docker run -d -p 4000:80 --name app maria0028855/appimg'
+                sleep 10
+                sh 'curl -k localhost:4000'
+            }
+        }
         stage('cleanup containers'){
             steps{
                 sh '''
@@ -60,13 +68,6 @@ pipeline {
                         docker container rm app
                     fi
                 '''
-                }
-            }
-        stage('deploy image'){
-            steps{
-                sh 'docker run -d -p 4000:80 --name app appimg'
-                sleep 10
-                sh 'curl -k localhost:4000'
             }
         }
     }
