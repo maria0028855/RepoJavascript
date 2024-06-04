@@ -1,9 +1,7 @@
 from node:latest
 
 WORKDIR /
-COPY src .
-COPY public .
-COPY package.json .
+ADD . /
 
 EXPOSE 8000
 
