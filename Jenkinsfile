@@ -54,7 +54,7 @@ pipeline {
         
         stage('deploy image'){
             steps{
-                sh 'docker run -d -p 4000:80 --name app maria0028855/appimg'
+                sh 'docker run -d -p 4000:80 --name app ' + registry + ":$BUILD_NUMBER"
                 sleep 10
                 sh 'curl -k localhost:4000'
             }
