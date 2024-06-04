@@ -1,7 +1,10 @@
-from nginx:latest
+from node:latest
 
-COPY src /usr/share/nginx/html
-COPY public /usr/share/nginx/html
-COPY package.json /usr/share/nginx/html
+WORKDIR /
+COPY src .
+COPY public .
+COPY package.json .
 
-ENTRYPOINT [ "nginx","-g", "daemon off;" ]
+EXPOSE 8000
+
+ENTRYPOINT npm run start
