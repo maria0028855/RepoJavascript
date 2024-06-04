@@ -36,7 +36,10 @@ pipeline {
         }
         stage('scan image'){
             steps{
-                sh "bash scanimg.sh"
+                sh '''
+                    bash scanimg.sh
+                    echo $?
+                '''
             }
         }
         stage('publish docker image'){
