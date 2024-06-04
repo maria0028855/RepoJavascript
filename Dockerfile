@@ -1,7 +1,13 @@
 from node:latest
 
 WORKDIR /
-ADD . /
+RUN mkdir -p /src
+ADD ./src /src
+
+RUN mkdir -p /public
+ADD ./public /public
+
+COPY package.json /
 
 EXPOSE 8000
 
