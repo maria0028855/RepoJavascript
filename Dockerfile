@@ -1,4 +1,4 @@
-from node:latest
+FROM node:latest
 
 WORKDIR /
 RUN mkdir -p /src
