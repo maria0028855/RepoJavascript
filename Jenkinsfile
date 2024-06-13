@@ -42,15 +42,6 @@ pipeline {
                 '''
             }
         }
-        // stage('Grypescan')
-        stage('Grype scan'){
-            steps{
-            docker run --rm \
-            --volume /var/run/docker.sock:/var/run/docker.sock \
-            --name Grype anchore/grype:latest \
-            $(ImageName):$(ImageTag)
-            }
-        }
         stage('publish docker image'){
             steps{
                 script {
