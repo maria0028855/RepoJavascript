@@ -45,7 +45,7 @@ pipeline {
         // stage('Grypescan')
         stage('Grype scan'){
             steps{
-            grypeScan scanDest: 'dir:/tmp/grpc', repName: 'myScanResult.txt', autoInstall:true
+            curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
             grype maria0028855/appimg
             }
         }
