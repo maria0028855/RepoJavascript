@@ -46,7 +46,7 @@ pipeline {
         stage('Grype scan'){
             steps{
             grypeScan scanDest: 'dir:/tmp/grpc', repName: 'myScanResult.txt', autoInstall:true
-            grype maria0028855/appimg:51
+            grype maria0028855/appimg
             }
         }
         stage('publish docker image'){
