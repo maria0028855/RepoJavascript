@@ -45,7 +45,10 @@ pipeline {
         // stage('Grypescan')
         stage('Grype scan'){
             steps{
-            grype maria0028855/appimg
+            docker run --rm \
+            --volume /var/run/docker.sock:/var/run/docker.sock \
+            --name Grype anchore/grype:latest \
+            $(ImageName):$(ImageTag)
             }
         }
         stage('publish docker image'){
