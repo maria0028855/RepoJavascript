@@ -45,7 +45,6 @@ pipeline {
         // stage('Grypescan')
         stage('Grype scan'){
             steps{
-            curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
             grype maria0028855/appimg
             }
         }
